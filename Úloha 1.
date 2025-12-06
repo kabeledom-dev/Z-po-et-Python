@@ -1,0 +1,52 @@
+knihy = {}
+
+with open("random_books.txt", "r", encoding="utf-8") as f:
+    for line in f:
+        casti = line.strip().split(":")
+        knihy[casti[0]] = casti[1].split(",")[1]
+
+# print(knihy)
+
+uzivatele = {}
+with open("random_users.txt", "r", encoding="utf-8") as f:
+    for line in f:
+        casti = line.strip().split(",")
+        uzivatele[casti[0]] = casti[1]
+
+# print(knihy)
+# print(uzivatele)
+
+vypujcky = {}
+with open("lending_records.txt", "r", encoding="utf-8") as f:
+    for line in f:
+        casti = line.strip().split(",")
+        id_uzivatele = casti[0]
+        seznam_knihy = casti[1:]
+
+        for id_knihy in seznam_knihy:
+            id_knihy = id_knihy
+
+            if id_knihy not in vypujcky:
+                vypujcky[id_knihy] = []
+            vypujcky[id_knihy].append(id_uzivatele)
+
+
+nej_kniha = None
+nejvyssi_pocet = 0
+
+for id_knihy, seznam_lidi in vypujcky.items():
+
+    pocet = len(seznam_lidi)
+
+    if pocet > nejvyssi_pocet:
+        nejvyssi_pocet = pocet
+        nej_kniha = id_knihy
+
+
+print("Vysledek je: ")
+if nej_kniha:
+    print(f"Nejcasteji pujcena kniha: {knihy[nej_kniha]}")
+    print("Pujcili si ji:")
+
+    for id_cloveka in vypujcky[nej_kniha]:
+        print(f"- {uzivatele[id_cloveka]}")
