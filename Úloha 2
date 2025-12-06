@@ -1,0 +1,32 @@
+import pandas as pd
+
+# 1. NAČTENÍ A PŘÍPRAVA (Stejné jako minule)
+df = pd.read_csv('world_cities.txt')
+hledane_zeme = ['Germany', 'France', 'United Kingdom', 'Spain']
+
+# Filtrujeme jen naše země
+vybrana_mesta = df[df['country'].isin(hledane_zeme)]
+
+# Seřadíme podle populace (největší nahoře)
+serazeno = vybrana_mesta.sort_values(by='population', ascending=False)
+
+# Vybereme TOP 10 pro každou zemi
+top_40 = serazeno.groupby('country').head(10)
+
+# 2. VÝPIS S MEZERAMI (Tady je změna)
+print("--- 10 NEJVĚTŠÍCH MĚST (Po státech) ---")
+
+# Projdeme náš seznam zemí jednu po druhé
+for zeme in hledane_zeme:
+    # 1. Z té hotové tabulky 'top_40' si vytáhneme jen řádky pro aktuální zemi
+    mesta_aktualni_zeme = top_40[top_40['country'] == zeme]
+
+    # 2. Vypíšeme název země (ať je to hezké)
+    print(f"\n*** {zeme} ***")  # \n udělá odřádkování před nadpisem
+
+    # 3. Vypíšeme tabulku pro tu jednu zemi (bez indexu 0,1,2...)
+    print(mesta_aktualni_zeme[['city', 'population']].to_string(index=False))
+
+    # 4. Tady by se dal dát další print() pro extra mezeru,
+    # ale to \n v nadpisu nahoře to zařídí taky.
+    # .to_string(index=False) je jen pro odstranění čísel řádků
