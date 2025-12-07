@@ -30,3 +30,24 @@ for zeme in hledane_zeme:
     # 4. Tady by se dal dát další print() pro extra mezeru,
     # ale to \n v nadpisu nahoře to zařídí taky.
     # .to_string(index=False) je jen pro odstranění čísel řádků
+
+Čistý kód:
+
+import pandas as pd
+
+df = pd.read_csv('world_cities.txt')
+hledane_zeme = ['Germany', 'France', 'United Kingdom', 'Spain']
+
+vybrana_mesta = df[df['country'].isin(hledane_zeme)]
+
+serazeno = vybrana_mesta.sort_values(by='population', ascending=False)
+
+top_40 = serazeno.groupby('country').head(10)
+
+print("--- 10 NEJVĚTŠÍCH MĚST (Po státech) ---")
+
+for zeme in hledane_zeme:
+    mesta_aktualni_zeme = top_40[top_40['country'] == zeme]
+
+    print(f"\n*** {zeme} ***")  # \n udělá odřádkování před nadpisem
+    print(mesta_aktualni_zeme[['city', 'population']].to_string(index=False))
