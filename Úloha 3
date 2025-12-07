@@ -1,0 +1,74 @@
+# 1. NAČTENÍ MŘÍŽKY
+mrizka = []
+with open("ctverecky.txt", "r") as f:
+    for radek in f:
+        # Převedeme textová čísla na int a uložíme do řádku
+        cisla = []
+        for x in radek.split():
+            cisla.append(int(x))
+        mrizka.append(cisla)
+
+
+# 2. PŘÍPRAVA (Startovní pozice a počítadlo)
+# Zadání: 4. řádek (index 3), 10. sloupec (index 9)
+seznam = [(3, 9)]
+velikost = 0
+
+# 3. HLAVNÍ SMYČKA (Dokud máme co zkoumat)
+while len(seznam) > 0:
+    r, c = seznam.pop(0)  # Vezmi první souřadnici ze seznamu
+
+    # A) KONTROLA HRANIC (Abychom neutekli z mřížky 10x10)
+    if r < 0 or r > 9 or c < 0 or c > 9:
+        continue  # Jsme mimo, jdi dál
+
+    # B) KONTROLA, JESTLI JE TO CÍL (Je to nula?)
+    if mrizka[r][c] == 0:
+        mrizka[r][c] = 2  # Označíme jako "vyřešeno" (přepíšeme na 2)
+        velikost = velikost + 1  # Přičteme bod
+
+
+        # Přidáme všechny sousedy do seznamu (neřešíme jestli jsou platní, to vyřeší krok A v dalším kole)
+        seznam.append((r + 1, c))  # Dolu
+        seznam.append((r - 1, c))  # Nahoru
+        seznam.append((r, c + 1))  # Doprava
+        seznam.append((r, c - 1))  # Doleva
+
+print(f"Velikost oblasti: {velikost}")
+
+for radek in mrizka:
+    print(radek)
+
+
+Čistý kód:
+
+mrizka = []
+with open("ctverecky.txt", "r") as f:
+    for radek in f:
+        cisla = []
+        for x in radek.split():
+            cisla.append(int(x))
+        mrizka.append(cisla)
+
+seznam = [(3, 9)]
+velikost = 0
+
+while len(seznam) > 0:
+    r, c = seznam.pop(0)
+
+    if r < 0 or r > 9 or c < 0 or c > 9:
+        continue
+
+    if mrizka[r][c] == 0:
+        mrizka[r][c] = 2
+        velikost = velikost + 1
+
+        seznam.append((r + 1, c))
+        seznam.append((r - 1, c))
+        seznam.append((r, c + 1))
+        seznam.append((r, c - 1))
+
+print(f"Velikost oblasti: {velikost}")
+
+for radek in mrizka:
+    print(radek)
