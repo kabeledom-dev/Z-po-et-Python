@@ -1,0 +1,90 @@
+import matplotlib.pyplot as plt
+import math
+
+# 1. NASTAVENÍ
+n = 10  # Kolik čísel chceme vygenerovat
+fib_rada = [0, 1] # Začátek posloupnosti je daný napevno
+
+# 2. GENEROVÁNÍ ŘADY
+# Jedeme od 2, protože indexy 0 a 1 už máme.
+# Potřebujeme doplnit do počtu 'n'.
+for i in range(n - 2):
+    # Nové číslo = poslední + předposlední
+    nove_cislo = fib_rada[-1] + fib_rada[-2]
+    fib_rada.append(nove_cislo)
+
+# 3. STATISTIKA (Součet a Průměr)
+soucet = sum(fib_rada)        # Funkce sum() sečte seznam
+prumer = soucet / len(fib_rada) # Klasický průměr
+
+# 4. SMĚRODATNÁ ODCHYLKA (Ruční výpočet)
+# Vzorec: Odmocnina z (průměru čtverců odchylek)
+suma_ctvercu_odchylek = 0
+
+for x in fib_rada:
+    odchylka = x - prumer         # Jak daleko je číslo od průměru
+    ctverec = odchylka * odchylka # To číslo na druhou
+    suma_ctvercu_odchylek = suma_ctvercu_odchylek + ctverec
+
+# Rozptyl je průměr těch čtverců
+rozptyl = suma_ctvercu_odchylek / len(fib_rada)
+# Směrodatná odchylka je odmocnina z rozptylu
+smerodatna_odchylka = math.sqrt(rozptyl)
+
+# Výpis do konzole
+print(f"Řada: {fib_rada}")
+print(f"Součet: {soucet}")
+print(f"Průměr: {prumer}")
+print(f"Směrodatná odchylka: {smerodatna_odchylka}")
+
+# 5. GRAF
+# Stačí dát plt.plot(SEZNAM). Osu X si matplotlib domyslí sám (0, 1, 2...).
+plt.plot(fib_rada, marker='o') # 'o' udělá tečky na bodech
+plt.title("Fibonacciho posloupnost")
+plt.ylabel("Hodnota")
+plt.xlabel("Index")
+plt.grid()
+plt.show()
+
+
+
+Čistý kód:
+
+import matplotlib.pyplot as plt
+import math
+
+n = 10
+fib_rada = [0, 1]
+
+for i in range(n - 2):
+
+    nove_cislo = fib_rada[-1] + fib_rada[-2]
+    fib_rada.append(nove_cislo)
+
+soucet = sum(fib_rada)
+prumer = soucet / len(fib_rada)
+
+suma_ctvercu_odchylek = 0
+
+for x in fib_rada:
+    odchylka = x - prumer
+    ctverec = odchylka * odchylka
+    suma_ctvercu_odchylek = suma_ctvercu_odchylek + ctverec
+
+rozptyl = suma_ctvercu_odchylek / len(fib_rada)
+
+smerodatna_odchylka = math.sqrt(rozptyl)
+
+
+print(f"Řada: {fib_rada}")
+print(f"Součet: {soucet}")
+print(f"Průměr: {prumer}")
+print(f"Směrodatná odchylka: {smerodatna_odchylka}")
+
+plt.plot(fib_rada, marker='o')
+plt.title("Fibonacciho posloupnost")
+plt.ylabel("Hodnota")
+plt.xlabel("Index")
+plt.grid()
+plt.show()
+
