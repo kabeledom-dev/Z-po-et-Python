@@ -1,0 +1,85 @@
+import csv
+
+profily = {}
+
+with open('profily.csv', 'r') as f:
+    # DictReader si sám načte první řádek jako názvy sloupců (h, b, tw...)
+    reader = csv.DictReader(f)
+
+    # Důležité: Přeskočíme druhý řádek s jednotkami (mm, kg), aby nám nedělal bordel
+    next(reader)
+
+    for radek in reader:
+        # Klíčem slovníku bude název profilu (např. 'IPN 140')
+        # Hodnotou bude celý ten řádek
+        profily[radek['Profil']] = radek
+
+# --- ÚKOL A: Vytisknout 'A' pro IPN 140 ---
+print("Plocha IPN 140:", profily['IPN 140']['A'])
+
+# --- ÚKOL B: Uživatel hledá profil ---
+vstup = input("Zadej profil (např. IPN 140): ")
+
+if vstup in profily:
+    print(profily[vstup])
+else:
+    # Pokud zadal nesmysl, vypíšeme klíče (názvy všech profilů)
+    print("Chyba. Možnosti:", list(profily.keys()))
+
+# --- ÚKOL C: Výpočet momentu setrvačnosti ---
+# Projdeme všechny profily jeden po druhém
+for data in profily.values():
+    # Načteme čísla ze slovníku (pozor, v CSV je vše text, musíme dát float)
+    tw = float(data['tw'])
+    h = float(data['h'])
+    tf = float(data['tf'])
+
+    # Vzorec ze zadání: 1/12 * tw * (h - 2 * tf)^3
+    vysledek = (1 / 12) * tw * (h - 2 * tf) ** 3
+
+    # Uložíme výsledek zpátky do slovníku pod novým názvem
+    data['Iy_stojina'] = vysledek
+
+# Kontrolní výpis (celý slovník)
+print("\nHotovo. Ukázka upravených dat pro IPN 140:")
+print(profily['IPN 140'])
+
+
+
+Čistý kód:
+
+import csv
+
+profily = {}
+
+with open('profily.csv', 'r') as f:
+    reader = csv.DictReader(f)
+
+    next(reader)
+
+    for radek in reader:
+        profily[radek['Profil']] = radek
+
+
+print("Plocha IPN 140:", profily['IPN 140']['A'])
+
+vstup = input("Zadej profil (např. IPN 140): ")
+
+if vstup in profily:
+    print(profily[vstup])
+else:
+    print("Chyba. Možnosti:", list(profily.keys()))
+
+for data in profily.values():
+
+    tw = float(data['tw'])
+    h = float(data['h'])
+    tf = float(data['tf'])
+
+    vysledek = (1 / 12) * tw * (h - 2 * tf) ** 3
+
+    data['Iy_stojina'] = vysledek
+
+print("\nHotovo. Ukázka upravených dat pro IPN 140:")
+print(profily['IPN 140'])
+
