@@ -1,0 +1,76 @@
+import math
+import matplotlib.pyplot as plt
+
+
+# 1. FUNKCE
+def f(x):
+    return math.sqrt(x) - math.cos(x)
+
+
+# 2. VÝPOČET (Půlení intervalů)
+x1 = 0
+x2 = 1
+presnost = 0.001
+
+while (x2 - x1) > presnost:
+    stred = (x1 + x2) / 2
+
+    if f(x1) * f(stred) < 0:
+        x2 = stred
+    else:
+        x1 = stred
+
+print(f"Kořen je: {stred}")
+
+# 3. GRAF (BEZ NUMPY, JEN ZÁKLAD)
+x_seznam = []
+y_seznam = []
+
+# Vyrobíme si 100 bodů ručně obyčejným cyklem
+# i pojede 0 až 100. Dělením 100 získáme 0.00, 0.01 ... 1.00
+for i in range(101):
+    x = i / 100
+    x_seznam.append(x)
+    y_seznam.append(f(x))
+
+plt.plot(x_seznam, y_seznam)  # Vykreslí modrou čáru
+plt.plot(stred, f(stred), 'rx')  # 'ro' = Red (červená) + O (tečka)
+plt.grid()  # Mřížka (aby bylo vidět kde je nula)
+plt.show()
+
+
+Čistý kód:
+
+import math
+import matplotlib.pyplot as plt
+
+def f(x):
+    return math.sqrt(x) - math.cos(x)
+
+x1 = 0
+x2 = 1
+presnost = 0.001
+
+while (x2 - x1) > presnost:
+    stred = (x1 + x2) / 2
+
+    if f(x1) * f(stred) < 0:
+        x2 = stred
+    else:
+        x1 = stred
+
+print(f"Kořen je: {stred}")
+
+x_seznam = []
+y_seznam = []
+
+for i in range(101):
+    x = i / 100
+    x_seznam.append(x)
+    y_seznam.append(f(x))
+
+plt.plot(x_seznam, y_seznam)
+plt.plot(stred, f(stred), 'rx')
+plt.grid()
+plt.show()
+
