@@ -1,0 +1,85 @@
+import matplotlib.pyplot as plt
+
+# 1. ZADÁNÍ HODNOT
+L = 5
+f = 2
+EIy = 10000
+
+# Seznamy pro výsledky
+x_seznam = []
+M_seznam = []
+w_seznam = []
+
+# 2. VÝPOČET (rozdělíme nosník na 50 kousků)
+for i in range(51):
+    x = i * (L / 50)  # Postupně: 0, 0.1, 0.2 ... až 5.0
+
+    # Dosazení do vzorců ze zadání
+    # Pozor: Mocnina se v Pythonu píše **
+    M = f * L / 2 * x - f * x ** 2 / 2
+    w = (f * x ** 4 / 24 - f * L * x ** 3 / 12 + f * L ** 3 / 24 * x) / EIy
+
+    # Uložení
+    x_seznam.append(x)
+    M_seznam.append(M)
+    w_seznam.append(w)
+
+# 3. ULOŽENÍ DO SOUBORU
+with open("vysledky.txt", "w") as soubor:
+    for i in range(len(x_seznam)):
+        # Zapíšeme x, M, w oddělené čárkou
+        # str() převede číslo na text
+        radek = str(x_seznam[i]) + "," + str(M_seznam[i]) + "," + str(w_seznam[i]) + "\n"
+        soubor.write(radek)
+
+# 4. GRAFY (Dva pod sebou)
+# Horní graf
+plt.plot(x_seznam, M_seznam)
+plt.title("Moment")
+plt.show()
+
+ # Spodní graf
+plt.plot(x_seznam, w_seznam)
+plt.title("Průhyb")
+
+plt.show()
+
+
+Čistý kód:
+
+
+import matplotlib.pyplot as plt
+
+L = 5
+f = 2
+EIy = 10000
+
+x_seznam = []
+M_seznam = []
+w_seznam = []
+
+
+for i in range(51):
+    x = i * (L / 50)
+    M = f * L / 2 * x - f * x ** 2 / 2
+    w = (f * x ** 4 / 24 - f * L * x ** 3 / 12 + f * L ** 3 / 24 * x) / EIy
+
+    x_seznam.append(x)
+    M_seznam.append(M)
+    w_seznam.append(w)
+
+with open("vysledky.txt", "w") as soubor:
+    for i in range(len(x_seznam)):
+
+        radek = str(x_seznam[i]) + "," + str(M_seznam[i]) + "," + str(w_seznam[i]) + "\n"
+        soubor.write(radek)
+
+plt.plot(x_seznam, M_seznam)
+plt.title("Moment")
+plt.show()
+
+plt.plot(x_seznam, w_seznam)
+plt.title("Průhyb")
+
+plt.show()
+
