@@ -1,0 +1,60 @@
+prvni = {"jmeno": "Petr", "vek": 25}
+druhy = {"mesto": "Praha", "auto": "Skoda"}
+
+# 1. DEFINICE VLASTNÍ FUNKCE
+
+def spoj_slovniky(slovnik_A, slovnik_B):
+    # Vytvoříme prázdný slovník, kam budeme vše ukládat
+    novy_slovnik = {}
+
+    # Cyklus 1: Projdeme první slovník a naházíme věci do nového
+    for klic in slovnik_A:
+        hodnota = slovnik_A[klic]
+        novy_slovnik[klic] = hodnota
+
+    # Cyklus 2: Projdeme druhý slovník a přidáme to tam taky
+    for klic in slovnik_B:
+        hodnota = slovnik_B[klic]
+        novy_slovnik[klic] = hodnota
+
+    # Zjistíme a vypíšeme velikost (počet položek)
+    velikost = len(novy_slovnik)
+    print(f"Velikost výsledného slovníku je: {velikost}")
+
+    # Funkce musí výsledek "vrátit" ven, aby se dal použít
+    return novy_slovnik
+
+
+# Zavoláme naši funkci a výsledek si uložíme do proměnné 'vysledek'
+vysledek = spoj_slovniky(prvni, druhy)
+
+# Vypíšeme pro kontrolu
+print("Spojený slovník:", vysledek)
+
+
+Čistý kód:
+
+
+prvni = {"jmeno": "Petr", "vek": 25}
+druhy = {"mesto": "Praha", "auto": "Skoda"}
+
+def spoj_slovniky(slovnik_A, slovnik_B):
+
+    novy_slovnik = {}
+
+    for klic in slovnik_A:
+        hodnota = slovnik_A[klic]
+        novy_slovnik[klic] = hodnota
+
+    for klic in slovnik_B:
+        hodnota = slovnik_B[klic]
+        novy_slovnik[klic] = hodnota
+
+    velikost = len(novy_slovnik)
+    print(f"Velikost výsledného slovníku je: {velikost}")
+
+    return novy_slovnik
+
+vysledek = spoj_slovniky(prvni, druhy)
+
+print("Spojený slovník:", vysledek)
