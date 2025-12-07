@@ -1,0 +1,89 @@
+# 1. NASTAVENÍ HRY
+tajne_slovo = "PYTHON"  # Slovo, které hádáme (velkými písmeny)
+uhadnute_znaky = []  # Sem budeme ukládat písmena, co uživatel zadal
+zivoty = 10  # Počet pokusů
+
+print("Vítej ve hře Hangman!")
+
+# 2. HLAVNÍ SMYČKA HRY
+# Hra běží, dokud mám životy (zivoty > 0)
+while zivoty > 0:
+
+    # --- A) Vypisování slova s otazníky ---
+    # Musíme sestavit aktuální podobu slova (např. P??H?N)
+    aktualni_stav = ""
+
+    for pismeno in tajne_slovo:
+        if pismeno in uhadnute_znaky:
+            aktualni_stav = aktualni_stav + pismeno  # Pokud uhodl, ukážeme písmeno
+        else:
+            aktualni_stav = aktualni_stav + "?"  # Pokud neuhodl, ukážeme ?
+
+    print(f"Slovo: {aktualni_stav} (Zbývá životů: {zivoty})")
+
+    # --- B) Kontrola výhry ---
+    # Pokud v aktuálním stavu už nejsou otazníky, vyhrál jsi!
+    if "?" not in aktualni_stav:
+        print("GRATULUJI! Uhodl jsi tajné slovo!")
+        break  # Ukončíme cyklus (hru)
+
+    # --- C) Hádání písmena ---
+    tip = input("Hádej písmeno: ")
+    tip = tip.upper()  # Převedeme na velká písmena, aby to fungovalo i když napíše malé
+
+    # Přidáme tip do seznamu hádaných (pokud tam už není)
+    if tip not in uhadnute_znaky:
+        uhadnute_znaky.append(tip)
+
+        # Pokud písmeno NENÍ v tajném slově, odečteme život
+        if tip not in tajne_slovo:
+            zivoty = zivoty - 1
+            print("Špatně!")
+    else:
+        print("Toto písmeno už jsi zkoušel.")
+
+# 3. KONEC HRY (PROHRA)
+# Pokud cyklus skončil a životy jsou 0 (nevyhrál jsme breakem)
+if zivoty == 0:
+    print(f"Prohrál jsi! Tajné slovo bylo: {tajne_slovo}")
+
+
+Čistý kód:
+
+tajne_slovo = "PYTHON"
+uhadnute_znaky = []
+zivoty = 10
+
+print("Vítej ve hře Hangman!")
+
+while zivoty > 0:
+
+    aktualni_stav = ""
+
+    for pismeno in tajne_slovo:
+        if pismeno in uhadnute_znaky:
+            aktualni_stav = aktualni_stav + pismeno
+        else:
+            aktualni_stav = aktualni_stav + "?"
+
+    print(f"Slovo: {aktualni_stav} (Zbývá životů: {zivoty})")
+
+    if "?" not in aktualni_stav:
+        print("GRATULUJI! Uhodl jsi tajné slovo!")
+        break
+
+    tip = input("Hádej písmeno: ")
+    tip = tip.upper()
+
+    if tip not in uhadnute_znaky:
+        uhadnute_znaky.append(tip)
+
+        if tip not in tajne_slovo:
+            zivoty = zivoty - 1
+            print("Špatně!")
+    else:
+        print("Toto písmeno už jsi zkoušel.")
+
+if zivoty == 0:
+    print(f"Prohrál jsi! Tajné slovo bylo: {tajne_slovo}")
+
